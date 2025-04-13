@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "19740623252",
+    "project_id": "cumn-c460a",
+    "storage_bucket": "cumn-c460a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19740623252:android:c4510e8fb614beac710f81",
+        "android_client_info": {
+          "package_name": "com.example.finalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA78ZuP_frWqYnQDITB7Kh6adazXkR0zT0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

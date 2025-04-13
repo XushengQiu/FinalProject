@@ -7,20 +7,32 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="FinalProject"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject"
         tools:targetApi="31">
+
+        <!-- Pantalla principal al iniciar la app -->
         <activity
-            android:name=".Loading_screen"
+            android:name=".Login_signup_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Pantalla admin (tras iniciar sesión) -->
+        <activity
+            android:name=".Admin_screen"
+            android:exported="false" />
+
+        <!-- Pantalla loading (por si la usas luego) -->
+        <activity
+            android:name=".Loading_screen"
+            android:exported="false" />
     </application>
+
 
 </manifest>
