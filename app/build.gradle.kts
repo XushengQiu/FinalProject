@@ -41,6 +41,7 @@ android {
 dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.firebase.auth)
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     // Import the Firebase BoM
@@ -52,6 +53,11 @@ dependencies {
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
 
+    //Endpoint Calls and JSON Parsing
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation ("com.google.code.gson:gson:2.8.6")
     // Otros
     implementation(libs.appcompat)
     implementation(libs.material)

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <!-- Permiso para usar internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,7 +16,7 @@
 
         <!-- Pantalla principal al iniciar la app -->
         <activity
-            android:name=".Login_signup_screen"
+            android:name=".ui.Login_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,14 +24,24 @@
             </intent-filter>
         </activity>
 
+        <!-- Pantalla signup, se puede ir desde login y viceversa -->
+        <activity
+            android:name=".ui.Signup_screen"
+            android:exported="false" />
+
+        <!-- Pantalla user (tras iniciar sesión) -->
+        <activity
+            android:name=".ui.User_Home_screen"
+            android:exported="false" />
+
         <!-- Pantalla admin (tras iniciar sesión) -->
         <activity
-            android:name=".Admin_screen"
+            android:name=".ui.Admin_Home_screen"
             android:exported="false" />
 
         <!-- Pantalla loading (por si la usas luego) -->
         <activity
-            android:name=".Loading_screen"
+            android:name=".ui.Loading_screen"
             android:exported="false" />
     </application>
 
