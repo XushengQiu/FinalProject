@@ -15,7 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
     private static Retrofit retrofit;
-    private static final String BASE_URL = "http://url_middleware/";
+    //momentaneo classroom y user
+    private static final String BASE_URL = "http://user-classroom-crud.ahdjd3hgg6bccqcs.spaincentral.azurecontainer.io:8080/";
 
     public static Retrofit getRetrofitInstance(Context context) {
         if (retrofit == null) {
