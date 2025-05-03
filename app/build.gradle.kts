@@ -63,6 +63,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
 
     // Test
     testImplementation(libs.junit)

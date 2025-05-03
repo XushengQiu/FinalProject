@@ -3,6 +3,7 @@ package com.example.finalproject.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,24 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
             Intent intent = new Intent(Pantalla_usuario_reservar.this, Pantalla_usuario_info.class);
             startActivity(intent);
         });
+
+        TextView idFill = findViewById(R.id.IdFill);
+        TextView nombreFill = findViewById(R.id.NombreFill);
+        TextView bloqueFill = findViewById(R.id.BloqueFill);
+        TextView plantaFill = findViewById(R.id.PlantaFill);
+        TextView numeroFill = findViewById(R.id.NúmeroFill);
+        TextView capacidadFill = findViewById(R.id.CapacidadFill);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            idFill.setText(intent.getStringExtra("AULA_ID"));
+            nombreFill.setText(intent.getStringExtra("AULA_NAME"));
+            bloqueFill.setText(intent.getStringExtra("AULA_BLOCK"));
+            plantaFill.setText(String.valueOf(intent.getIntExtra("AULA_FLOOR", -1)));
+            numeroFill.setText(String.valueOf(intent.getIntExtra("AULA_NUMBER", -1)));
+            capacidadFill.setText(String.valueOf(intent.getIntExtra("AULA_CAPACITY", -1)));
+        }
+
     }
 
 }
