@@ -2,9 +2,13 @@ package com.example.finalproject.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +16,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject.R;
+import com.example.finalproject.models.Classroom;
+import com.example.finalproject.network.ClassroomApiService;
+import com.example.finalproject.network.RetrofitInstance;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Pantalla_usuario_inicial extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private AulaAdapter adapter;
-    private List<Aula> aulas;
-    private boolean ascending = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,108 +40,88 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.imageView);
         Button btnMisReservas = findViewById(R.id.button3);
         recyclerView = findViewById(R.id.recyclerView);
-
-        View mainView = findViewById(R.id.main);
-        mainView.setPadding(0, 0, 0, 0);
-
-        imageView.setOnClickListener(v -> {
-            Intent intent = new Intent(Pantalla_usuario_inicial.this, Pantalla_usuario_info.class);
-            startActivity(intent);
-        });
-
-        btnMisReservas.setOnClickListener(v -> {
-            Intent intent = new Intent(Pantalla_usuario_inicial.this, Pantalla_usuario_reservados.class);
-            startActivity(intent);
-        });
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        aulas = getSampleData();
-        adapter = new AulaAdapter(aulas, this::openReservarScreen);
-        recyclerView.setAdapter(adapter);
+
+        imageView.setOnClickListener(v -> startActivity(new Intent(this, Pantalla_usuario_info.class)));
+        btnMisReservas.setOnClickListener(v -> startActivity(new Intent(this, Pantalla_usuario_reservados.class)));
+
+        fetchAulas();
     }
 
-    private void openReservarScreen(String id) {
-        Intent intent = new Intent(Pantalla_usuario_inicial.this, Pantalla_usuario_reservar.class);
-        intent.putExtra("AULA_ID", id);
-        startActivity(intent);
+    private void fetchAulas() {
+        ClassroomApiService apiService = RetrofitInstance.getRetrofitInstance(this).create(ClassroomApiService.class);
+        Call<List<Classroom>> call = apiService.getAllClassrooms();
+
+        call.enqueue(new Callback<List<Classroom>>() {
+            @Override
+            public void onResponse(Call<List<Classroom>> call, Response<List<Classroom>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    adapter = new AulaAdapter(response.body());
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    Log.e("API", "Error en la respuesta: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Classroom>> call, Throwable t) {
+                Log.e("API", "Error de red: ", t);
+            }
+        });
     }
 
-    private List<Aula> getSampleData() {
-        List<Aula> data = new ArrayList<>();
-        data.add(new Aula("1001", "Aula Magna", "1", 0, 1, 40));
-        data.add(new Aula("3102", "Laboratorio 1", "3", 1, 2, 10));
-        data.add(new Aula("4203", "Sala de Reuniones", "4", 2, 3, 25));
-        data.add(new Aula("CIC1", "Aula 101", "CIC", 0, 1, 20));
-        data.add(new Aula("2303", "Laboratorio de Informática", "2", 3, 4, 35));
-        return data;
-    }
+    private class AulaAdapter extends RecyclerView.Adapter<AulaAdapter.AulaViewHolder> {
 
-    // Aula model class
-    public static class Aula {
-        public String id, nombre, bloque;
-        public int planta, numero, capacidad;
+        private final List<Classroom> aulas;
 
-        public Aula(String id, String nombre, String bloque, int planta, int numero, int capacidad) {
-            this.id = id;
-            this.nombre = nombre;
-            this.bloque = bloque;
-            this.planta = planta;
-            this.numero = numero;
-            this.capacidad = capacidad;
-        }
-    }
-
-    // Adapter para RecyclerView
-    public class AulaAdapter extends RecyclerView.Adapter<AulaViewHolder> {
-
-        private List<Aula> aulaList;
-        private OnReservarClickListener listener;
-
-        public AulaAdapter(List<Aula> aulaList, OnReservarClickListener listener) {
-            this.aulaList = aulaList;
-            this.listener = listener;
+        public AulaAdapter(List<Classroom> aulas) {
+            this.aulas = aulas;
         }
 
         @Override
-        public AulaViewHolder onCreateViewHolder(android.view.ViewGroup parent, int viewType) {
-            android.view.View view = android.view.LayoutInflater.from(parent.getContext())
-                    .inflate(android.R.layout.simple_list_item_2, parent, false);
+        public AulaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_aula, parent, false);
             return new AulaViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(AulaViewHolder holder, int position) {
-            Aula aula = aulaList.get(position);
-            holder.bind(aula);
-            holder.itemView.setOnClickListener(v -> listener.onClick(aula.id));
+            holder.bind(aulas.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return aulaList.size();
-        }
-    }
-
-    public interface OnReservarClickListener {
-        void onClick(String id);
-    }
-
-    public class AulaViewHolder extends RecyclerView.ViewHolder {
-
-        private android.widget.TextView text1;
-        private android.widget.Button reservarBtn;
-
-        public AulaViewHolder(android.view.View itemView) {
-            super(itemView);
-            text1 = itemView.findViewById(android.R.id.text1);
-            reservarBtn = new android.widget.Button(itemView.getContext());
-            reservarBtn.setText("Reservar");
-            ((android.widget.LinearLayout) itemView).addView(reservarBtn);
+            return aulas.size();
         }
 
-        public void bind(Aula aula) {
-            text1.setText(aula.id + " - " + aula.nombre + " (Cap: " + aula.capacidad + ")");
-            reservarBtn.setOnClickListener(v -> openReservarScreen(aula.id));
+        class AulaViewHolder extends RecyclerView.ViewHolder {
+            TextView colId, colNombre, colCapacidad;
+            Button btnReservar;
+
+            AulaViewHolder(View itemView) {
+                super(itemView);
+                colId = itemView.findViewById(R.id.colId);
+                colNombre = itemView.findViewById(R.id.colNombre);
+                colCapacidad = itemView.findViewById(R.id.colCapacidad);
+                btnReservar = itemView.findViewById(R.id.btnReservar);
+            }
+
+            void bind(Classroom aula) {
+                colId.setText(aula.getId());
+                colNombre.setText(aula.getName());
+                colCapacidad.setText(String.valueOf(aula.getCapacity()));
+
+                btnReservar.setOnClickListener(v -> {
+                    Intent intent = new Intent(Pantalla_usuario_inicial.this, Pantalla_usuario_reservar.class);
+                    intent.putExtra("AULA_ID", aula.getId());
+                    intent.putExtra("AULA_NAME", aula.getName());
+                    intent.putExtra("AULA_BLOCK", aula.getBlock());
+                    intent.putExtra("AULA_FLOOR", aula.getFloor());
+                    intent.putExtra("AULA_NUMBER", aula.getNumber());
+                    intent.putExtra("AULA_CAPACITY", aula.getCapacity());
+                    startActivity(intent);
+                });
+            }
         }
     }
 }

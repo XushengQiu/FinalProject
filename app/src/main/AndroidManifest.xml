@@ -17,32 +17,22 @@
         <!-- Pantalla principal al iniciar la app -->
         <activity
             android:name=".ui.Pantalla_usuario_inicial"
-            android:exported="true"> 
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Pantalla signup, se puede ir desde login y viceversa -->
-        <activity
-            android:name=".ui.Signup_screen"
-            android:exported="false" />
+        <activity android:name=".ui.Login_screen" android:exported="false" />
+        <activity android:name=".ui.Signup_screen" android:exported="false" />
+        <activity android:name=".ui.Admin_Home_screen" android:exported="false" />
+        <activity android:name=".ui.Loading_screen" android:exported="false" />
+        <activity android:name=".ui.Pantalla_usuario_info" android:exported="false" />
+        <activity android:name=".ui.Pantalla_usuario_reservados" android:exported="false" />
+        <activity android:name=".ui.Pantalla_usuario_reservar" android:exported="false" />
 
-        <!-- Pantalla user (tras iniciar sesión)
-        <activity
-            android:name=".ui.Pantalla_usuario_inicial"
-            android:exported="false" /> -->
 
-        <!-- Pantalla admin (tras iniciar sesión) -->
-        <activity
-            android:name=".ui.Admin_Home_screen"
-            android:exported="false" />
-
-        <!-- Pantalla loading (por si la usas luego) -->
-        <activity
-            android:name=".ui.Loading_screen"
-            android:exported="false" />
     </application>
 
 

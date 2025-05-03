@@ -10,9 +10,6 @@ public interface UserApiService {
     @GET("api/user")
     Call<List<User>> getAllUsers();
 
-    @GET("api/user/{id}")
-    Call<User> getUserById(@Path("id") int id);
-
     @GET("api/user/uid/{uid}")
     Call<User> getUserByUid(@Path("uid") String uid);
 

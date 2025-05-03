@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Reservation {
 
-    @SerializedName("id")
-    private int id;
-
     @SerializedName("user_id")
     private int userId;
 
@@ -20,20 +17,10 @@ public class Reservation {
     private String endTime;
 
     public Reservation(int id, int userId, String classroomId, String startTime, String endTime) {
-        this.id = id;
         this.userId = userId;
         this.classroomId = classroomId;
         this.startTime = startTime;
         this.endTime = endTime;
-    }
-
-    // Getters y Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getUserId() {

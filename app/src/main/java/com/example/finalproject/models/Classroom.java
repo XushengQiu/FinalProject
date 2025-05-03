@@ -3,11 +3,12 @@ package com.example.finalproject.models;
 public class Classroom {
     private String id;
     private String name;
-    private String block;
+    private int block;
     private int floor;
     private int number;
+    private int capacity;
 
-    public Classroom(int capacity, int number, int floor, String block, String name, String id) {
+    public Classroom(int capacity, int number, int floor, int block, String name, String id) {
         this.capacity = capacity;
         this.number = number;
         this.floor = floor;
@@ -16,8 +17,6 @@ public class Classroom {
         this.id = id;
     }
 
-    private int capacity;
-
     // Getters y setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -25,8 +24,8 @@ public class Classroom {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getBlock() { return block; }
-    public void setBlock(String block) { this.block = block; }
+    public int getBlock() { return block; }
+    public void setBlock(int block) { this.block = block; }
 
     public int getFloor() { return floor; }
     public void setFloor(int floor) { this.floor = floor; }
