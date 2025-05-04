@@ -1,5 +1,6 @@
 package com.example.finalproject.network;
 
+import com.example.finalproject.models.NewUser;
 import com.example.finalproject.models.User;
 import java.util.List;
 import retrofit2.Call;
@@ -14,7 +15,7 @@ public interface UserApiService {
     Call<User> getUserByUid(@Path("uid") String uid);
 
     @POST("api/user")
-    Call<User> createUser(@Body User user);
+    Call<User> createUser(@Body NewUser user);
 
     @PUT("api/user/{id}")
     Call<User> updateUser(@Path("id") int id, @Body User user);

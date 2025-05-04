@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="Mis datos:"
-        android:textStyle="bold"
-        android:textSize="32sp"
         android:textColor="@android:color/black"
+        android:textSize="32sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.128"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,39 +32,16 @@
         app:srcCompat="@drawable/home" />
 
     <TextView
-        android:id="@+id/textUid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="40dp"
-        android:text="Uid:"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textUidFill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="40dp"
-        android:text="Null"
-        android:textSize="17sp"
-        app:layout_constraintStart_toEndOf="@+id/textUid"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
         android:id="@+id/textNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="24dp"
         android:text="Nombre:"
-        android:textStyle="bold"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textUid" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textNombreFill"
@@ -75,7 +52,7 @@
         android:text="Null"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/textNombre"
-        app:layout_constraintTop_toBottomOf="@+id/textUidFill" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textGrado"
@@ -84,8 +61,8 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="24dp"
         android:text="Grado:"
-        android:textStyle="bold"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textNombre" />
 
@@ -107,8 +84,8 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="24dp"
         android:text="Matrícula:"
-        android:textStyle="bold"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textGrado" />
 
@@ -130,8 +107,8 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="24dp"
         android:text="Rol:"
-        android:textStyle="bold"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textMatricula" />
 
@@ -145,4 +122,19 @@
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/textRol"
         app:layout_constraintTop_toBottomOf="@+id/textMatriculaFill" />
+
+    <!-- Botón para borrar la cuenta -->
+    <Button
+        android:id="@+id/btnBorrarCuenta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#D32F2F"
+        android:text="Borrar Cuenta"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

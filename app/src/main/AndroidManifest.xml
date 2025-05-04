@@ -17,7 +17,7 @@
 
         <!-- Pantalla principal al iniciar la app -->
         <activity
-            android:name=".ui.Pantalla_usuario_inicial"
+            android:name=".ui.Login_screen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,16 +25,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.Login_screen" android:exported="false" />
         <activity android:name=".ui.Signup_screen" android:exported="false" />
-        <activity android:name=".ui.Admin_Home_screen" android:exported="false" />
         <activity android:name=".ui.Loading_screen" android:exported="false" />
+        <activity android:name=".ui.Pantalla_usuario_inicial" android:exported="false" />
         <activity android:name=".ui.Pantalla_usuario_info" android:exported="false" />
         <activity android:name=".ui.Pantalla_usuario_reservados" android:exported="false" />
         <activity android:name=".ui.Pantalla_usuario_reservar" android:exported="false" />
-
-
+        <activity android:name=".ui.Pantalla_admin_crearAula" android:exported="false" />
     </application>
-
-
 </manifest>

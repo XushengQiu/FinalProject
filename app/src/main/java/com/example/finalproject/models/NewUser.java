@@ -1,28 +1,21 @@
 package com.example.finalproject.models;
 
-public class User {
-    private int id;
+public class NewUser {
     private String uid;
     private String name;
     private String degree;
     private String schoolNumber;
     private String role;
-    
-    public User(int id, String uid, String name, String degree, String schoolNumber, String role) {
-        this.id = id;
+
+
+    public NewUser(String uid, String name, String degree, String schoolNumber) {
         this.uid = uid;
         this.name = name;
         this.degree = degree;
         this.schoolNumber = schoolNumber;
-        this.role = role;
-    }
-    public int getId() {
-        return id;
+        this.role = "USER";
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
     public String getUid() {
         return uid;
     }

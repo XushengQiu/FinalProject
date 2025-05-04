@@ -56,15 +56,15 @@ dependencies {
     //Endpoint Calls and JSON Parsing
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation ("com.google.code.gson:gson:2.8.6")
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation ("com.google.code.gson:gson:2.10.1")
+
     // Otros
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
-
 
     // Test
     testImplementation(libs.junit)

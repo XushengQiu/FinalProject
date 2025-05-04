@@ -1,8 +1,7 @@
 package com.example.finalproject.network;
 
+import com.example.finalproject.models.AvailableSlotsWrapper;
 import com.example.finalproject.models.Reservation;
-import com.example.finalproject.models.AvailableSlot;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -15,7 +14,7 @@ public interface ReservationApiService {
 
     // Endpoint para obtener slots disponibles
     @GET("api/reservations/available")
-    Call<List<AvailableSlot>> getAvailableSlots(
+    Call<AvailableSlotsWrapper> getAvailableSlots(
             @Query("classroom_id") String classroomId,
             @Query("date") String date);
 }

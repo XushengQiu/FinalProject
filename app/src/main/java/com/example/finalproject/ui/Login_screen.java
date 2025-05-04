@@ -2,6 +2,7 @@ package com.example.finalproject.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -9,9 +10,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.finalproject.R;
-import com.example.finalproject.utils.SharedPrefManager;
+import com.example.finalproject.models.User;
+import com.example.finalproject.network.RetrofitInstance;
+import com.example.finalproject.network.UserApiService;
+import com.example.finalproject.utils.SessionDataManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Login_screen extends AppCompatActivity {
 
@@ -46,25 +54,21 @@ public class Login_screen extends AppCompatActivity {
 
                             // Obtener el usuario autenticado
                             FirebaseUser user = mAuth.getCurrentUser();
-
+                            String uid = user.getUid();
                             // Obtener el ID token (JWT)
                             if (user != null) {
                                 user.getIdToken(true) // 'true' fuerza la actualización del token si es necesario
                                         .addOnCompleteListener(tokenTask -> {
                                             if (tokenTask.isSuccessful()) {
                                                 String idToken = tokenTask.getResult().getToken();
-                                                // Guarda el token en SharedPreferences
-                                                SharedPrefManager.getInstance(this).saveToken(idToken);
-
-                                                // Redirige a Admin_screen
-                                                Intent intent = new Intent(this, MainActivity.class);
-                                                startActivity(intent);
-                                                finish();
+                                                // Guarda el token
+                                                SessionDataManager.getInstance().setFirebaseToken(idToken);
                                             } else {
                                                 Toast.makeText(this, "Error al obtener el token: " + tokenTask.getException().getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
                             }
+                            fetchUserByUid(uid);
                         } else {
                             Toast.makeText(this, "Error al iniciar sesión: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
@@ -77,5 +81,32 @@ public class Login_screen extends AppCompatActivity {
             finish();
         });
     }
+
+    private void fetchUserByUid(String uid) {
+        UserApiService apiService = RetrofitInstance.getRetrofitInstance(this).create(UserApiService.class);
+        Call<User> call = apiService.getUserByUid(uid);
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    SessionDataManager.getInstance().setUser(response.body());
+                    Log.d(SessionDataManager.getInstance().getCurrentUser().getRole(), "Login Exitoso");
+                    Intent intent = new Intent(Login_screen.this, Pantalla_usuario_inicial.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Log.e("API", "Error en la respuesta: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API", "Error de red: ", t);
+            }
+        });
+    }
+
+
 }
 

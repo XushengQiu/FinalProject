@@ -19,6 +19,7 @@ import com.example.finalproject.R;
 import com.example.finalproject.models.Classroom;
 import com.example.finalproject.network.ClassroomApiService;
 import com.example.finalproject.network.RetrofitInstance;
+import com.example.finalproject.utils.SessionDataManager;
 
 import java.util.List;
 
@@ -44,7 +45,25 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
 
         imageView.setOnClickListener(v -> startActivity(new Intent(this, Pantalla_usuario_info.class)));
         btnMisReservas.setOnClickListener(v -> startActivity(new Intent(this, Pantalla_usuario_reservados.class)));
+        Button buttonLogout = findViewById(R.id.buttonLogout);
+        buttonLogout.setOnClickListener(v -> {
+            // Limpiar sesion
+            SessionDataManager.getInstance().clear();
+            Intent intent = new Intent(Pantalla_usuario_inicial.this, Login_screen.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Evita volver con el botón atrás
+            startActivity(intent);
+        });
 
+        Button btnCrearAula = findViewById(R.id.btnCrearAula);
+        if ("ADMIN".equalsIgnoreCase(SessionDataManager.getInstance().getCurrentUser().getRole())) {
+            btnCrearAula.setVisibility(View.VISIBLE);
+            btnCrearAula.setOnClickListener(v -> {
+                Intent intent = new Intent(Pantalla_usuario_inicial.this, Pantalla_admin_crearAula.class);
+                startActivity(intent);
+            });
+        } else {
+            btnCrearAula.setVisibility(View.GONE);
+        }
         fetchAulas();
     }
 
@@ -96,7 +115,7 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
 
         class AulaViewHolder extends RecyclerView.ViewHolder {
             TextView colId, colNombre, colCapacidad;
-            Button btnReservar;
+            Button btnReservar, btnEliminar;
 
             AulaViewHolder(View itemView) {
                 super(itemView);
@@ -104,6 +123,7 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
                 colNombre = itemView.findViewById(R.id.colNombre);
                 colCapacidad = itemView.findViewById(R.id.colCapacidad);
                 btnReservar = itemView.findViewById(R.id.btnReservar);
+                btnEliminar = itemView.findViewById(R.id.btnEliminar);
             }
 
             void bind(Classroom aula) {
@@ -121,8 +141,40 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
                     intent.putExtra("AULA_CAPACITY", aula.getCapacity());
                     startActivity(intent);
                 });
+
+                // Mostrar botón eliminar solo si el rol es ADMIN
+                String role = SessionDataManager.getInstance().getCurrentUser().getRole();
+                if ("ADMIN".equalsIgnoreCase(role)) {
+                    btnEliminar.setVisibility(View.VISIBLE);
+                    btnEliminar.setOnClickListener(v -> {
+                        eliminarAula(aula.getId(), getAdapterPosition());
+                    });
+                } else {
+                    btnEliminar.setVisibility(View.GONE);
+                }
             }
         }
     }
-}
+    private void eliminarAula(String aulaId, int position) {
+        ClassroomApiService apiService = RetrofitInstance.getRetrofitInstance(this).create(ClassroomApiService.class);
 
+        Call<Void> call = apiService.deleteClassroom(aulaId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    adapter.aulas.remove(position);
+                    adapter.notifyItemRemoved(position);
+                } else {
+                    Log.e("DELETE", "Fallo al eliminar aula: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("DELETE", "Error de red al eliminar aula: ", t);
+            }
+        });
+    }
+
+}
