@@ -68,13 +68,7 @@ public class Pantalla_usuario_info extends AppCompatActivity {
                     .setMessage("¿Estás seguro de que quieres borrar tu cuenta? Borrar tu cuenta implica borrar también tus datos y es irreversible.")
                     .setPositiveButton("Sí", (dialog, which) -> {
                         // Si el usuario confirma, llama al API para borrar la cuenta
-                        borrarCuentaFirebase();
-                        borrarCuentaBD(SessionDataManager.getInstance().getCurrentUser().getId());
-                        // Limpiar sesion
-                        SessionDataManager.getInstance().clear();
-                        Intent intent = new Intent(Pantalla_usuario_info.this, Login_screen.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Evita volver con el botón atrás
-                        startActivity(intent);
+                        borrarCuenta(SessionDataManager.getInstance().getCurrentUser().getId());
                     })
                     .setNegativeButton("No", (dialog, which) -> {
                         // Si el usuario cancela, cierra el pop-up
@@ -93,6 +87,7 @@ public class Pantalla_usuario_info extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // La cuenta se ha eliminado con éxito
                             Log.d("Firebase", "Cuenta eliminada exitosamente.");
+                            logout();
                         } else {
                             // Hubo un error al intentar eliminar la cuenta
                             Log.e("Firebase", "Error al eliminar la cuenta: " + task.getException());
@@ -106,13 +101,12 @@ public class Pantalla_usuario_info extends AppCompatActivity {
         }
     }
 
-    private void borrarCuentaBD(int userId) {
+    private void borrarCuenta(int userId) {
+        //1º se borra de nuetsra BD
         // Crear la instancia de Retrofit
         UserApiService apiService = RetrofitInstance.getRetrofitInstance(this).create(UserApiService.class);
-
         // Llamada al endpoint DELETE para borrar la cuenta
         Call<Void> call = apiService.deleteUser(userId);
-
         // Ejecutar la llamada de manera asíncrona
         call.enqueue(new Callback<Void>() {
             @Override
@@ -120,6 +114,8 @@ public class Pantalla_usuario_info extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     // Si la respuesta es exitosa, redirigir al home o realizar la acción necesaria
                     Log.d("USER", "Cuenta eliminada exitosamente");
+                    // Si sale bien se borra de Firebase
+                    borrarCuentaFirebase();
                 } else {
                     // Si la respuesta no fue exitosa, muestra el error
                     Log.e("API", "Error en la respuesta: " + response.code());
@@ -134,6 +130,18 @@ public class Pantalla_usuario_info extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error en la conexión", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void logout() {
+        //Cerrar sesión de Firebase
+        FirebaseAuth.getInstance().signOut();
+        //Limpiar datos de la sesión local
+        SessionDataManager.getInstance().clear();
+        //Redirigir al login
+        Intent intent = new Intent(this, Login_screen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpia el back stack
+        startActivity(intent);
+        finish();
     }
 
 }

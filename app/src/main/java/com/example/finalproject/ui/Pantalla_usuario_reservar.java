@@ -1,6 +1,7 @@
 package com.example.finalproject.ui;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,21 +24,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalproject.R;
 import com.example.finalproject.models.AvailableSlot;
 import com.example.finalproject.models.AvailableSlotsWrapper;
+import com.example.finalproject.models.NewReservation;
+import com.example.finalproject.models.Reservation;
 import com.example.finalproject.network.ReservationApiService;
 import com.example.finalproject.network.RetrofitInstance;
+import com.example.finalproject.utils.SessionDataManager;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Pantalla_usuario_reservar extends AppCompatActivity {
+
+    private List<AvailableSlot> lastAvailableSlots;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +121,18 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
 
             datePickerDialog.show();
         });
+
+        TextView startTimeTextView = findViewById(R.id.startTimeTextView);
+        TextView endTimeTextView = findViewById(R.id.endTimeTextView);
+
+        startTimeTextView.setOnClickListener(v -> showTimePicker(startTimeTextView));
+        endTimeTextView.setOnClickListener(v -> showTimePicker(endTimeTextView));
+
+        Button reservarButton = findViewById(R.id.reservarButton);
+        reservarButton.setOnClickListener(v -> {
+            validateSelectedTimes();
+        });
+
     }
 
     private void fetchAvailableSlots(String classroomId, String selectedDate) {
@@ -125,8 +145,8 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
             @Override
             public void onResponse(Call<AvailableSlotsWrapper> call, Response<AvailableSlotsWrapper> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<AvailableSlot> slots = response.body().getAvailableSlots();
-                    mostrarSlots(slots);
+                    lastAvailableSlots = response.body().getAvailableSlots();
+                    mostrarSlots(lastAvailableSlots);
                 } else {
                     Toast.makeText(Pantalla_usuario_reservar.this, "No se encontraron franjas horarias.", Toast.LENGTH_SHORT).show();
                 }
@@ -141,9 +161,105 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
 
     private void mostrarSlots(List<AvailableSlot> slots) {
         RecyclerView recyclerView = findViewById(R.id.slotsRecyclerView);
+        TextView emptyTextView = findViewById(R.id.emptyTextView);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         SlotsAdapter adapter = new SlotsAdapter(slots);
         recyclerView.setAdapter(adapter);
+
+        // Mostrar u ocultar el RecyclerView y el mensaje de vacío
+        if (slots == null || slots.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            emptyTextView.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyTextView.setVisibility(View.GONE);
+        }
+    }
+
+    private void showTimePicker(TextView targetTextView) {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                (view, selectedHour, selectedMinute) -> {
+                    String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute);
+                    targetTextView.setText(formattedTime);
+                }, hour, minute, true);
+
+        timePickerDialog.show();
+    }
+
+
+    private void validateSelectedTimes() {
+        TextView startTimeView = findViewById(R.id.startTimeTextView);
+        TextView endTimeView = findViewById(R.id.endTimeTextView);
+        TextView dateTextView = findViewById(R.id.dateTextView);
+
+        String startTimeStr = startTimeView.getText().toString();
+        String endTimeStr = endTimeView.getText().toString();
+        String selectedDate = dateTextView.getText().toString();
+
+        if (startTimeStr.equals("Seleccionar") || endTimeStr.equals("Seleccionar")) {
+            Toast.makeText(this, "Por favor selecciona ambas horas", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            String startDateTime = selectedDate + "T" + startTimeStr + ":00";
+            String endDateTime = selectedDate + "T" + endTimeStr + ":00";
+
+            // Validar si ambos tiempos están dentro del mismo available slot
+            boolean esValido = false;
+            for (AvailableSlot slot : lastAvailableSlots) { // Suponiendo que has guardado los slots obtenidos en una variable global
+                if (startDateTime.compareTo(slot.getStart()) >= 0 &&
+                        endDateTime.compareTo(slot.getEnd()) <= 0) {
+                    esValido = true;
+                    break;
+                }
+            }
+
+            if (!esValido) {
+                Toast.makeText(this, "Las horas seleccionadas no son válidas", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // TODO: Sustituye esto con el userId real de tu sesión
+            int userId = SessionDataManager.getInstance().getCurrentUser().getId();
+            String classroomId = getIntent().getStringExtra("AULA_ID");
+
+            NewReservation reservation = new NewReservation(userId, classroomId, startDateTime, endDateTime);
+            crearReserva(reservation);
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Error procesando las horas seleccionadas", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void crearReserva(NewReservation reservation) {
+        ReservationApiService apiService = RetrofitInstance.getRetrofitInstance(this).create(ReservationApiService.class);
+        Call<Reservation> call = apiService.createReservation(reservation);
+
+        call.enqueue(new Callback<Reservation>() {
+            @Override
+            public void onResponse(Call<Reservation> call, Response<Reservation> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(Pantalla_usuario_reservar.this, "Reserva realizada correctamente", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Pantalla_usuario_reservar.this, Pantalla_usuario_inicial.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpia el back stack
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(Pantalla_usuario_reservar.this, "Error al crear la reserva", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reservation> call, Throwable t) {
+                Toast.makeText(Pantalla_usuario_reservar.this, "Fallo de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private class SlotsAdapter extends RecyclerView.Adapter<SlotsAdapter.SlotViewHolder> {
@@ -163,14 +279,11 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
         @Override
         public void onBindViewHolder(SlotViewHolder holder, int position) {
             AvailableSlot slot = availableSlots.get(position);
-            holder.slotStart.setText("Inicio: " + slot.getStart());
-            holder.slotEnd.setText("Fin: " + slot.getEnd());
-
-            holder.selectSlotButton.setOnClickListener(v -> {
-                // Aquí puedes agregar un TimePickerDialog o lo que necesites para seleccionar un rango
-                // Y luego reservar el slot o hacer alguna acción
-            });
+            String startFormatted = formatTime(slot.getStart());
+            String endFormatted = formatTime(slot.getEnd());
+            holder.slotTimeText.setText(startFormatted + " - " + endFormatted);
         }
+
 
         @Override
         public int getItemCount() {
@@ -178,16 +291,25 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
         }
 
         public static class SlotViewHolder extends RecyclerView.ViewHolder {
-
-            TextView slotStart, slotEnd;
-            Button selectSlotButton;
+            TextView slotTimeText;
 
             public SlotViewHolder(View itemView) {
                 super(itemView);
-                slotStart = itemView.findViewById(R.id.slotStart);
-                slotEnd = itemView.findViewById(R.id.slotEnd);
-                selectSlotButton = itemView.findViewById(R.id.selectSlotButton);
+                slotTimeText = itemView.findViewById(R.id.slotTimeText);
+            }
+        }
+
+        private String formatTime(String isoDateTime) {
+            try {
+                SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                Date date = isoFormat.parse(isoDateTime);
+                SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                return outputFormat.format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return isoDateTime; // fallback en caso de error
             }
         }
     }
+
 }

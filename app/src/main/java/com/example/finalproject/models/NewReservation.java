@@ -2,10 +2,8 @@ package com.example.finalproject.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Reservation {
+public class NewReservation {
 
-    @SerializedName("id")
-    private int id;
     @SerializedName("user_id")
     private int userId;
 
@@ -18,20 +16,11 @@ public class Reservation {
     @SerializedName("end_time")
     private String endTime;
 
-    public Reservation(int id, int userId, String classroomId, String startTime, String endTime) {
-        this.id = id;
+    public NewReservation( int userId, String classroomId, String startTime, String endTime) {
         this.userId = userId;
         this.classroomId = classroomId;
         this.startTime = startTime;
         this.endTime = endTime;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getUserId() {

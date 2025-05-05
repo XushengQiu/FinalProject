@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +42,13 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
 
         ImageView imageView = findViewById(R.id.imageView);
         Button btnMisReservas = findViewById(R.id.button3);
+        if ("ADMIN".equalsIgnoreCase(SessionDataManager.getInstance().getCurrentUser().getRole())) {
+            btnMisReservas.setText("Reservas");
+        } else {
+            btnMisReservas.setText("Mis reservas");
+        }
+
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -48,7 +56,7 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
         btnMisReservas.setOnClickListener(v -> startActivity(new Intent(this, Pantalla_usuario_reservados.class)));
         Button buttonLogout = findViewById(R.id.buttonLogout);
         buttonLogout.setOnClickListener(v -> {
-           logout();
+            logout();
         });
 
         Button btnCrearAula = findViewById(R.id.btnCrearAula);
@@ -64,7 +72,7 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
         fetchAulas();
     }
 
-    private void logout(){
+    private void logout() {
         //Cerrar sesión de Firebase
         FirebaseAuth.getInstance().signOut();
         //Limpiar datos de la sesión local
@@ -73,7 +81,8 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
         Intent intent = new Intent(this, Login_screen.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpia el back stack
         startActivity(intent);
-        finish();}
+        finish();
+    }
 
     private void fetchAulas() {
         ClassroomApiService apiService = RetrofitInstance.getRetrofitInstance(this).create(ClassroomApiService.class);
@@ -83,8 +92,13 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Classroom>> call, Response<List<Classroom>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    adapter = new AulaAdapter(response.body());
-                    recyclerView.setAdapter(adapter);
+                    List<Classroom> classrooms = response.body();
+                    if (classrooms.isEmpty()) {
+                        Toast.makeText(Pantalla_usuario_inicial.this, "No hay Aulas", Toast.LENGTH_SHORT).show();
+                    } else {
+                        adapter = new AulaAdapter(classrooms);
+                        recyclerView.setAdapter(adapter);
+                    }
                 } else {
                     Log.e("API", "Error en la respuesta: " + response.code());
                 }
@@ -163,6 +177,7 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
             }
         }
     }
+
     private void eliminarAula(String aulaId, int position) {
         ClassroomApiService apiService = RetrofitInstance.getRetrofitInstance(this).create(ClassroomApiService.class);
 

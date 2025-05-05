@@ -1,36 +1,21 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:padding="16dp">
+    android:padding="6dp"> <!-- Reduce el padding global -->
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/slotTimeText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="09:00 - 10:00"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Start time of the slot -->
-        <TextView
-            android:id="@+id/slotStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start Time"
-            android:textSize="18sp"/>
-
-        <!-- End time of the slot -->
-        <TextView
-            android:id="@+id/slotEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="End Time"
-            android:textSize="18sp"/>
-
-        <!-- Button to select a time slot -->
-        <Button
-            android:id="@+id/selectSlotButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Seleccionar hora"
-            android:textSize="16sp"/>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

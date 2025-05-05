@@ -51,15 +51,21 @@ public class Pantalla_admin_crearAula extends AppCompatActivity {
         String id = etId.getText().toString().trim();
         String name = etName.getText().toString().trim();
         String block = etBlock.getText().toString().trim();
-        int floor = Integer.parseInt(etFloor.getText().toString().trim());
-        int number = Integer.parseInt(etNumber.getText().toString().trim());
-        int capacity = Integer.parseInt(etCapacity.getText().toString().trim());
+        String floorStr = etFloor.getText().toString().trim();
+        String numberStr = etNumber.getText().toString().trim();
+        String capacityStr = etCapacity.getText().toString().trim();
 
-        // Verificamos que los campos no estén vacíos
-        if (id.isEmpty() || name.isEmpty() || block.isEmpty()) {
+        // Verificamos que ningún campo esté vacío
+        if (id.isEmpty() || name.isEmpty() || block.isEmpty() ||
+                floorStr.isEmpty() || numberStr.isEmpty() || capacityStr.isEmpty()) {
             Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // Convertimos los valores numéricos
+        int floor = Integer.parseInt(floorStr);
+        int number = Integer.parseInt(numberStr);
+        int capacity = Integer.parseInt(capacityStr);
 
         // Creamos una nueva instancia de Classroom
         Classroom classroom = new Classroom(capacity, number, floor, block, name, id);
@@ -72,21 +78,20 @@ public class Pantalla_admin_crearAula extends AppCompatActivity {
             @Override
             public void onResponse(Call<Classroom> call, Response<Classroom> response) {
                 if (response.isSuccessful()) {
-                    // Si la creación fue exitosa, redirigir a Pantalla_usuario_inicial
                     Intent intent = new Intent(Pantalla_admin_crearAula.this, Pantalla_usuario_inicial.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                 } else {
-                    // Si algo falla, mostramos un mensaje de error
                     Toast.makeText(Pantalla_admin_crearAula.this, "Error al crear el aula", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Classroom> call, Throwable t) {
-                // En caso de fallo en la llamada, mostramos el error
                 Toast.makeText(Pantalla_admin_crearAula.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }
