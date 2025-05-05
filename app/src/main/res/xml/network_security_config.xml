@@ -5,7 +5,6 @@
         <domain includeSubdomains="true">user-classroom-crud.ahdjd3hgg6bccqcs.spaincentral.azurecontainer.io</domain>
         <!-- Middleware -->
         <domain includeSubdomains="true">cumn-middleware.eddedvgkbugqf2ag.spaincentral.azurecontainer.io</domain>
-        <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">10.0.2.2</domain>
     </domain-config>
 </network-security-config>

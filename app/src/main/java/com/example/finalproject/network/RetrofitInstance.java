@@ -13,14 +13,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class RetrofitInstance {
     private static Retrofit retrofit;
     //classroom y user:
-    //private static final String BASE_URL = "http://user-classroom-crud.ahdjd3hgg6bccqcs.spaincentral.azurecontainer.io:8080/";
+    private static final String BASE_URL = "http://user-classroom-crud.ahdjd3hgg6bccqcs.spaincentral.azurecontainer.io:8080/";
     //Middleware
     //private static final String BASE_URL = "http://cumn-middleware.eddedvgkbugqf2ag.spaincentral.azurecontainer.io:3000/";
-    private static final String BASE_URL = "http://10.0.2.2:4000/";
+    //private static final String BASE_URL = "http://10.0.2.2:4000/";
     public static Retrofit getRetrofitInstance(Context context) {
         if (retrofit == null) {
 
@@ -45,6 +46,9 @@ public class RetrofitInstance {
 
             // Cliente HTTP con ambos interceptores
             OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(2, TimeUnit.SECONDS) // Tiempo de conexión
+                    .writeTimeout(2, TimeUnit.SECONDS)   // Tiempo de escritura
+                    .readTimeout(2, TimeUnit.SECONDS)
                     .addInterceptor(loggingInterceptor)
                     .addInterceptor(authInterceptor)
                     .build();
