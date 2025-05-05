@@ -63,12 +63,12 @@ public class Login_screen extends AppCompatActivity {
                                                 String idToken = tokenTask.getResult().getToken();
                                                 // Guarda el token
                                                 SessionDataManager.getInstance().setFirebaseToken(idToken);
+                                                fetchUserByUid(uid);
                                             } else {
                                                 Toast.makeText(this, "Error al obtener el token: " + tokenTask.getException().getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
                             }
-                            fetchUserByUid(uid);
                         } else {
                             Toast.makeText(this, "Error al iniciar sesión: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }

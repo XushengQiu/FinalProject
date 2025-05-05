@@ -86,15 +86,14 @@ public class Signup_screen extends AppCompatActivity {
                                             String idToken = tokenTask.getResult().getToken();
                                             // Guarda el token
                                             SessionDataManager.getInstance().setFirebaseToken(idToken);
+                                            //Crear cuenta en nuestra BD con name, schoolnumber y degree
+                                            NewUser newUser = new NewUser(uid, name, degree, schoolNumber);
+                                            createUser(newUser);
                                         } else {
                                             Toast.makeText(this, "Error al obtener el token: " + tokenTask.getException().getMessage(), Toast.LENGTH_LONG).show();
                                         }
                                     });
                         }
-
-                        //Crear cuenta en nuestra BD con name, schoolnumber y degree
-                        NewUser newUser = new NewUser(uid, name, degree, schoolNumber);
-                        createUser(newUser);
                     } else {
                         Toast.makeText(this, "Error al registrar usuario: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }

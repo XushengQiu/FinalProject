@@ -20,6 +20,7 @@ import com.example.finalproject.models.Classroom;
 import com.example.finalproject.network.ClassroomApiService;
 import com.example.finalproject.network.RetrofitInstance;
 import com.example.finalproject.utils.SessionDataManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -47,11 +48,7 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
         btnMisReservas.setOnClickListener(v -> startActivity(new Intent(this, Pantalla_usuario_reservados.class)));
         Button buttonLogout = findViewById(R.id.buttonLogout);
         buttonLogout.setOnClickListener(v -> {
-            // Limpiar sesion
-            SessionDataManager.getInstance().clear();
-            Intent intent = new Intent(Pantalla_usuario_inicial.this, Login_screen.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Evita volver con el botón atrás
-            startActivity(intent);
+           logout();
         });
 
         Button btnCrearAula = findViewById(R.id.btnCrearAula);
@@ -66,6 +63,17 @@ public class Pantalla_usuario_inicial extends AppCompatActivity {
         }
         fetchAulas();
     }
+
+    private void logout(){
+        //Cerrar sesión de Firebase
+        FirebaseAuth.getInstance().signOut();
+        //Limpiar datos de la sesión local
+        SessionDataManager.getInstance().clear();
+        //Redirigir al login
+        Intent intent = new Intent(this, Login_screen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpia el back stack
+        startActivity(intent);
+        finish();}
 
     private void fetchAulas() {
         ClassroomApiService apiService = RetrofitInstance.getRetrofitInstance(this).create(ClassroomApiService.class);
