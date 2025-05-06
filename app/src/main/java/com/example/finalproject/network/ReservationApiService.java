@@ -11,10 +11,10 @@ import retrofit2.http.*;
 
 public interface ReservationApiService {
 
-    @GET("api/reservation/id/{id}")
+    @GET("api/reservation/user/{id}")
     Call<List<Reservation>> getAllReservationsByUserId(@Path("id") int id);
 
-    @GET("/api/reservation")
+    @GET("/api/reservation/all")
     Call<List<Reservation>> getAllReservations();
 
     @POST("api/reservation/")

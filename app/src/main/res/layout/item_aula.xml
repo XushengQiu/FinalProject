@@ -45,6 +45,7 @@
             android:id="@+id/btnEliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#8B1E62"
             android:text="Eliminar"
             android:visibility="gone"
             android:layout_marginTop="4dp" />

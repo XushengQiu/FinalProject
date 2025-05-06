@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,6 +61,10 @@ public class Pantalla_usuario_reservados extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        DividerItemDecoration divider = new DividerItemDecoration(
+                recyclerView.getContext(), LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(divider);
+
 
         if ("ADMIN".equalsIgnoreCase(SessionDataManager.getInstance().getCurrentUser().getRole())) {
             fetchAllReservations();
@@ -154,7 +159,7 @@ public class Pantalla_usuario_reservados extends AppCompatActivity {
 
         class ReservationViewHolder extends RecyclerView.ViewHolder {
             TextView classroomId, date, timeRange;
-            Button btnDelete;
+            Button btnDelete, btnShowQR;
 
             ReservationViewHolder(View itemView) {
                 super(itemView);
@@ -162,6 +167,7 @@ public class Pantalla_usuario_reservados extends AppCompatActivity {
                 date = itemView.findViewById(R.id.date);
                 timeRange = itemView.findViewById(R.id.timeRange);
                 btnDelete = itemView.findViewById(R.id.btnDelete);
+                btnShowQR = itemView.findViewById(R.id.btnShowQR);
             }
 
             void bind(Reservation reserva) {
@@ -174,14 +180,18 @@ public class Pantalla_usuario_reservados extends AppCompatActivity {
                 String horaFin = rawEnd.substring(11, 16);
 
                 // Asignar valores a los TextViews
-                classroomId.setText(reserva.getClassroomId());
-                date.setText(fecha);
-                timeRange.setText("Inicio " + horaInicio + " - Fin " + horaFin);
+                classroomId.setText("Aula: " + reserva.getClassroomId());
+                date.setText("Fecha: " + fecha);
+                timeRange.setText("Horario: Inicio " + horaInicio + " - Fin " + horaFin);
 
-                // Botón de eliminar siempre visible
-                btnDelete.setVisibility(View.VISIBLE);
+                //btnDelete.setVisibility(View.VISIBLE);
                 btnDelete.setOnClickListener(v -> {
                     eliminarReserva(reserva.getId(), getAdapterPosition());
+                });
+                btnShowQR.setOnClickListener(v -> {
+                    Intent intent = new Intent(Pantalla_usuario_reservados.this, Pantalla_usuario_QR.class);
+                    intent.putExtra("reservation", reserva);
+                    startActivity(intent);
                 });
             }
         }
