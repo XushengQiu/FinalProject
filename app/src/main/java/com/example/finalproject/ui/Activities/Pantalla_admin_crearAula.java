@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +12,7 @@ import com.example.finalproject.R;
 import com.example.finalproject.models.Classroom;
 import com.example.finalproject.network.ClassroomApiService;
 import com.example.finalproject.network.RetrofitInstance;
-import com.example.finalproject.ui.Pantalla_usuario_inicial;
+import com.example.finalproject.ui.Activity_Main;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,13 +36,10 @@ public class Pantalla_admin_crearAula extends AppCompatActivity {
         etCapacity = findViewById(R.id.etCapacity);
         btnCrear = findViewById(R.id.btnCrear);
 
-        ImageView homeIcon = findViewById(R.id.homeIcon);
-        homeIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(Pantalla_admin_crearAula.this, Pantalla_usuario_inicial.class);
-            startActivity(intent);
-        });
-
         btnCrear.setOnClickListener(v -> crearAula());
+
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
 
     }
 
@@ -79,7 +75,8 @@ public class Pantalla_admin_crearAula extends AppCompatActivity {
             @Override
             public void onResponse(Call<Classroom> call, Response<Classroom> response) {
                 if (response.isSuccessful()) {
-                    Intent intent = new Intent(Pantalla_admin_crearAula.this, Pantalla_usuario_inicial.class);
+                    Intent intent = new Intent(Pantalla_admin_crearAula.this, Activity_Main.class);
+                    intent.putExtra("fragment_to_load", "inicio");
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();

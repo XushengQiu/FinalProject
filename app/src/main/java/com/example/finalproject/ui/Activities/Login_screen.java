@@ -13,7 +13,7 @@ import com.example.finalproject.R;
 import com.example.finalproject.models.User;
 import com.example.finalproject.network.RetrofitInstance;
 import com.example.finalproject.network.UserApiService;
-import com.example.finalproject.ui.Pantalla_usuario_inicial;
+import com.example.finalproject.ui.Activity_Main;
 import com.example.finalproject.utils.SessionDataManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -93,7 +93,7 @@ public class Login_screen extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     SessionDataManager.getInstance().setUser(response.body());
                     Log.d(SessionDataManager.getInstance().getCurrentUser().getRole(), "Login Exitoso");
-                    Intent intent = new Intent(Login_screen.this, Pantalla_usuario_inicial.class);
+                    Intent intent = new Intent(Login_screen.this, Activity_Main.class);
                     startActivity(intent);
                     finish();
                 } else {

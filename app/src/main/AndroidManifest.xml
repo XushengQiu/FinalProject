@@ -26,12 +26,12 @@
         </activity>
 
         <activity android:name=".ui.Activities.Signup_screen" android:exported="false" />
+        <activity android:name=".ui.Activity_Main" android:exported="false" />
         <activity android:name=".ui.Loading_screen" android:exported="false" />
-        <activity android:name=".ui.Pantalla_usuario_inicial" android:exported="false" />
-        <activity android:name=".ui.Pantalla_usuario_info" android:exported="false" />
         <activity android:name=".ui.Activities.Pantalla_usuario_reservar" android:exported="false" />
-        <activity android:name=".ui.Pantalla_usuario_reservados" android:exported="false" />
         <activity android:name=".ui.Activities.Pantalla_usuario_QR" android:exported="false" />
         <activity android:name=".ui.Activities.Pantalla_admin_crearAula" android:exported="false" />
+        <activity android:name=".ui.Activities.Pantalla_admin_reservados" android:exported="false" />
+
     </application>
 </manifest>

@@ -1,0 +1,11 @@
+<resources>
+    <style name="TextAppearance_Theme_Subtitle">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance_Theme_Subtitle_Desc">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
+

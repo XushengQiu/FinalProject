@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.Pantalla_usuario_info">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Mis datos:"
-        android:textColor="@android:color/black"
+        android:layout_marginTop="12dp"
+        android:text="Mis Datos:"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeIcon" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/homeIcon"
+    <Button
+        android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:text="Cerrar Sesion"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/home" />
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="24dp"
         android:text="Nombre:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@id/textView3" />
 
     <TextView
         android:id="@+id/textNombreFill"
@@ -51,20 +52,19 @@
         android:layout_marginTop="24dp"
         android:text="Null"
         android:textSize="17sp"
-        app:layout_constraintStart_toEndOf="@+id/textNombre"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toEndOf="@id/textNombre"
+        app:layout_constraintTop_toBottomOf="@id/textView3" />
 
     <TextView
         android:id="@+id/textGrado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="24dp"
         android:text="Grado:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNombre" />
+        app:layout_constraintStart_toStartOf="@+id/textNombre"
+        app:layout_constraintTop_toBottomOf="@id/textNombre" />
 
     <TextView
         android:id="@+id/textGradoFill"
@@ -74,20 +74,19 @@
         android:layout_marginTop="24dp"
         android:text="Null"
         android:textSize="17sp"
-        app:layout_constraintStart_toEndOf="@+id/textGrado"
-        app:layout_constraintTop_toBottomOf="@+id/textNombreFill" />
+        app:layout_constraintStart_toEndOf="@id/textGrado"
+        app:layout_constraintTop_toBottomOf="@id/textNombreFill" />
 
     <TextView
         android:id="@+id/textMatricula"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="24dp"
         android:text="Matrícula:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textGrado" />
+        app:layout_constraintStart_toStartOf="@+id/textGrado"
+        app:layout_constraintTop_toBottomOf="@id/textGrado" />
 
     <TextView
         android:id="@+id/textMatriculaFill"
@@ -97,20 +96,19 @@
         android:layout_marginTop="24dp"
         android:text="Null"
         android:textSize="17sp"
-        app:layout_constraintStart_toEndOf="@+id/textMatricula"
-        app:layout_constraintTop_toBottomOf="@+id/textGradoFill" />
+        app:layout_constraintStart_toEndOf="@id/textMatricula"
+        app:layout_constraintTop_toBottomOf="@id/textGradoFill" />
 
     <TextView
         android:id="@+id/textRol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="24dp"
         android:text="Rol:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMatricula" />
+        app:layout_constraintStart_toStartOf="@+id/textMatricula"
+        app:layout_constraintTop_toBottomOf="@id/textMatricula" />
 
     <TextView
         android:id="@+id/textView13"
@@ -120,10 +118,9 @@
         android:layout_marginTop="24dp"
         android:text="Null"
         android:textSize="17sp"
-        app:layout_constraintStart_toEndOf="@+id/textRol"
-        app:layout_constraintTop_toBottomOf="@+id/textMatriculaFill" />
+        app:layout_constraintStart_toEndOf="@id/textRol"
+        app:layout_constraintTop_toBottomOf="@id/textMatriculaFill" />
 
-    <!-- Botón para borrar la cuenta -->
     <Button
         android:id="@+id/btnBorrarCuenta"
         android:layout_width="match_parent"
@@ -132,9 +129,11 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="#8B1E62"
         android:text="Borrar Cuenta"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@id/textView13" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

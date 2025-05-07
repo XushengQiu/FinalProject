@@ -1,8 +1,8 @@
 package com.example.finalproject.ui.Activities;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,8 +14,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalproject.R;
 import com.example.finalproject.models.Reservation;
-import com.example.finalproject.ui.Pantalla_usuario_info;
-import com.example.finalproject.ui.Pantalla_usuario_inicial;
 import com.example.finalproject.utils.QRManager;
 import com.google.gson.Gson;
 
@@ -38,16 +36,8 @@ public class Pantalla_usuario_QR extends AppCompatActivity {
             return insets;
         });
 
-        ImageView imageView1 = findViewById(R.id.homeIcon3);
-        imageView1.setOnClickListener(v -> {
-            Intent intent = new Intent(Pantalla_usuario_QR.this, Pantalla_usuario_inicial.class);
-            startActivity(intent);
-        });
-        ImageView imageView2 = findViewById(R.id.imageView3);
-        imageView2.setOnClickListener(v -> {
-            Intent intent = new Intent(Pantalla_usuario_QR.this, Pantalla_usuario_info.class);
-            startActivity(intent);
-        });
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
 
         // Extraer y formatear fecha y hora
         String rawStart = reserva.getStartTime();

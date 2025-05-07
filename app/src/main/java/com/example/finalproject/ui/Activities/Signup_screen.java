@@ -16,7 +16,7 @@ import com.example.finalproject.models.NewUser;
 import com.example.finalproject.models.User;
 import com.example.finalproject.network.RetrofitInstance;
 import com.example.finalproject.network.UserApiService;
-import com.example.finalproject.ui.Pantalla_usuario_inicial;
+import com.example.finalproject.ui.Activity_Main;
 import com.example.finalproject.utils.SessionDataManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -112,7 +112,7 @@ public class Signup_screen extends AppCompatActivity {
                     User createdUser = response.body();
                     Toast.makeText(Signup_screen.this, "Usuario creado: " + createdUser.getName(), Toast.LENGTH_SHORT).show();
                     SessionDataManager.getInstance().setUser(createdUser);
-                    Intent intent = new Intent(Signup_screen.this, Pantalla_usuario_inicial.class);
+                    Intent intent = new Intent(Signup_screen.this, Activity_Main.class);
                     startActivity(intent);
                     finish();
                 } else {

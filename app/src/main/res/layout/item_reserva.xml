@@ -28,7 +28,7 @@
         android:layout_marginTop="4dp"
         android:text="01-01-2024"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnShowQR"
+        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
         app:layout_constraintStart_toEndOf="@id/classroomId"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,8 +58,8 @@
     <!-- Delete Button (debajo del botón Ver QR) -->
     <Button
         android:id="@+id/btnDelete"
-        android:layout_width="91dp"
-        android:layout_height="53dp"
+        android:layout_width="97dp"
+        android:layout_height="52dp"
         android:backgroundTint="#8B1E62"
         android:text="Borrar"
         android:textColor="@android:color/white"

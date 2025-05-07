@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +26,7 @@ import com.example.finalproject.models.NewReservation;
 import com.example.finalproject.models.Reservation;
 import com.example.finalproject.network.ReservationApiService;
 import com.example.finalproject.network.RetrofitInstance;
-import com.example.finalproject.ui.Pantalla_usuario_info;
-import com.example.finalproject.ui.Pantalla_usuario_inicial;
+import com.example.finalproject.ui.Activity_Main;
 import com.example.finalproject.utils.SessionDataManager;
 
 import java.text.ParseException;
@@ -57,16 +55,9 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ImageView imageView1 = findViewById(R.id.homeIcon3);
-        imageView1.setOnClickListener(v -> {
-            Intent intent = new Intent(Pantalla_usuario_reservar.this, Pantalla_usuario_inicial.class);
-            startActivity(intent);
-        });
-        ImageView imageView2 = findViewById(R.id.imageView3);
-        imageView2.setOnClickListener(v -> {
-            Intent intent = new Intent(Pantalla_usuario_reservar.this, Pantalla_usuario_info.class);
-            startActivity(intent);
-        });
+
+        Button btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
 
         TextView idFill = findViewById(R.id.IdFill);
         TextView nombreFill = findViewById(R.id.NombreFill);
@@ -162,19 +153,16 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
 
     private void mostrarSlots(List<AvailableSlot> slots) {
         RecyclerView recyclerView = findViewById(R.id.slotsRecyclerView);
-        TextView emptyTextView = findViewById(R.id.emptyTextView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         SlotsAdapter adapter = new SlotsAdapter(slots);
         recyclerView.setAdapter(adapter);
 
-        // Mostrar u ocultar el RecyclerView y el mensaje de vacío
+        // Mostrar u ocultar el RecyclerView
         if (slots == null || slots.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
-            emptyTextView.setVisibility(View.VISIBLE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
-            emptyTextView.setVisibility(View.GONE);
         }
     }
 
@@ -207,13 +195,19 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
             return;
         }
 
+        //La hora de fin debe ser mayor que la hora de inicio
+        if (startTimeStr.compareTo(endTimeStr) >= 0) {
+            Toast.makeText(this, "La hora de fin debe ser mayor que la hora de inicio", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         try {
             String startDateTime = selectedDate + "T" + startTimeStr + ":00";
             String endDateTime = selectedDate + "T" + endTimeStr + ":00";
 
             // Validar si ambos tiempos están dentro del mismo available slot
             boolean esValido = false;
-            for (AvailableSlot slot : lastAvailableSlots) { // Suponiendo que has guardado los slots obtenidos en una variable global
+            for (AvailableSlot slot : lastAvailableSlots) {
                 if (startDateTime.compareTo(slot.getStart()) >= 0 &&
                         endDateTime.compareTo(slot.getEnd()) <= 0) {
                     esValido = true;
@@ -221,12 +215,12 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
                 }
             }
 
+
             if (!esValido) {
                 Toast.makeText(this, "Las horas seleccionadas no son válidas", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // TODO: Sustituye esto con el userId real de tu sesión
             int userId = SessionDataManager.getInstance().getCurrentUser().getId();
             String classroomId = getIntent().getStringExtra("AULA_ID");
 
@@ -247,7 +241,8 @@ public class Pantalla_usuario_reservar extends AppCompatActivity {
             public void onResponse(Call<Reservation> call, Response<Reservation> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(Pantalla_usuario_reservar.this, "Reserva realizada correctamente", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(Pantalla_usuario_reservar.this, Pantalla_usuario_inicial.class);
+                    Intent intent = new Intent(Pantalla_usuario_reservar.this, Activity_Main.class);
+                    intent.putExtra("fragment_to_load", "reservas");
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Limpia el back stack
                     startActivity(intent);
                     finish();

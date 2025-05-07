@@ -7,286 +7,252 @@
     android:layout_height="match_parent"
     tools:context=".ui.Activities.Pantalla_usuario_reservar">
 
-    <ImageView
-        android:id="@+id/homeIcon3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/home" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_myplaces" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Reserva:"
+        android:layout_marginTop="12dp"
+        android:text="Reservar Aula:"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:drawableLeft="@android:drawable/ic_menu_revert"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
     <TextView
         android:id="@+id/Id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="Id:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/IdFill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:text="Null"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/Id"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/Id" />
 
     <TextView
         android:id="@+id/Nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="Nombre:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Id"
         app:layout_constraintTop_toBottomOf="@+id/Id" />
 
     <TextView
         android:id="@+id/NombreFill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:text="Null"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/Nombre"
-        app:layout_constraintTop_toBottomOf="@+id/IdFill" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/Nombre" />
 
     <TextView
         android:id="@+id/Bloque"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="Bloque:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Id"
         app:layout_constraintTop_toBottomOf="@+id/Nombre" />
 
     <TextView
         android:id="@+id/BloqueFill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:text="Null"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/Bloque"
-        app:layout_constraintTop_toBottomOf="@+id/NombreFill" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/Bloque" />
 
     <TextView
         android:id="@+id/Planta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="Planta:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Id"
         app:layout_constraintTop_toBottomOf="@+id/Bloque" />
 
     <TextView
         android:id="@+id/PlantaFill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:text="Null"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/Planta"
-        app:layout_constraintTop_toBottomOf="@+id/BloqueFill" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/Planta" />
 
     <TextView
         android:id="@+id/Numero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="Número:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Id"
         app:layout_constraintTop_toBottomOf="@+id/Planta" />
 
     <TextView
         android:id="@+id/NúmeroFill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:text="Null"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/Numero"
-        app:layout_constraintTop_toBottomOf="@+id/PlantaFill" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/Numero" />
 
     <TextView
         android:id="@+id/Capacidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
         android:text="Capacidad:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Id"
         app:layout_constraintTop_toBottomOf="@+id/Numero" />
 
     <TextView
         android:id="@+id/CapacidadFill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
         android:text="Null"
         android:textSize="17sp"
         app:layout_constraintStart_toEndOf="@+id/Capacidad"
-        app:layout_constraintTop_toBottomOf="@+id/NúmeroFill" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/Capacidad" />
+
 
     <Button
         android:id="@+id/selectDateButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="Seleccionar fecha"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Capacidad" />
+        app:layout_constraintEnd_toStartOf="@+id/dateTextView"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/CapacidadFill" />
 
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="Fecha no seleccionada"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.232"
-        app:layout_constraintStart_toEndOf="@+id/availableSlotsTitle"
+        app:layout_constraintEnd_toEndOf="@+id/slotsRecyclerView"
+        app:layout_constraintStart_toEndOf="@+id/selectDateButton"
         app:layout_constraintTop_toTopOf="@+id/selectDateButton" />
 
     <TextView
         android:id="@+id/availableSlotsTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:text="Horas Disponibles:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/selectDateButton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
-
-    <TextView
-        android:id="@+id/emptyTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="---"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:visibility="gone" />
+        app:layout_constraintEnd_toStartOf="@+id/slotsRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/selectDateButton" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/slotsRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="4dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/reservarButton"
-        app:layout_constraintEnd_toEndOf="@+id/dateTextView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/selectDateButton"
-        app:layout_constraintTop_toBottomOf="@+id/selectDateButton"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/availableSlotsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/selectDateButton" />
 
     <TextView
         android:id="@+id/titleStartTime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Inicio de Reserva:"
-        android:textStyle="bold"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/availableSlotsTitle"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/availableSlotsTitle"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/availableSlotsTitle" />
 
     <TextView
         android:id="@+id/startTimeTextView"
-        android:layout_width="141dp"
+        android:layout_width="0dp"
         android:layout_height="42dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
         android:background="#DDDDDD"
         android:clickable="true"
         android:focusable="true"
         android:padding="8dp"
         android:text="Seleccionar"
-        android:textSize="18sp"
         android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="@+id/availableSlotsTitle"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/availableSlotsTitle"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/titleStartTime"
+        app:layout_constraintStart_toStartOf="@+id/titleStartTime"
         app:layout_constraintTop_toBottomOf="@+id/titleStartTime" />
 
     <TextView
         android:id="@+id/titleEndTime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Fin de Reserva:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/availableSlotsTitle"
+        app:layout_constraintEnd_toEndOf="@+id/titleStartTime"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/startTimeTextView" />
 
     <TextView
         android:id="@+id/endTimeTextView"
-        android:layout_width="140dp"
+        android:layout_width="0dp"
         android:layout_height="42dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
         android:background="#DDDDDD"
         android:clickable="true"
         android:focusable="true"
@@ -294,26 +260,20 @@
         android:text="Seleccionar"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/startTimeTextView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/availableSlotsTitle"
+        app:layout_constraintEnd_toEndOf="@+id/titleEndTime"
+        app:layout_constraintStart_toStartOf="@+id/titleEndTime"
         app:layout_constraintTop_toBottomOf="@+id/titleEndTime" />
+
 
     <Button
         android:id="@+id/reservarButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="16dp"
         android:text="Reservar"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
+        app:layout_constraintEnd_toEndOf="@+id/slotsRecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/endTimeTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
