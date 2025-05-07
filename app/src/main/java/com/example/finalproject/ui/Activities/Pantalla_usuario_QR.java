@@ -1,4 +1,4 @@
-package com.example.finalproject.ui;
+package com.example.finalproject.ui.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalproject.R;
 import com.example.finalproject.models.Reservation;
+import com.example.finalproject.ui.Pantalla_usuario_info;
+import com.example.finalproject.ui.Pantalla_usuario_inicial;
 import com.example.finalproject.utils.QRManager;
 import com.google.gson.Gson;
 

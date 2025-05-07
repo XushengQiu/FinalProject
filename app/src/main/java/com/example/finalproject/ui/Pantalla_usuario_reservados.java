@@ -24,6 +24,7 @@ import com.example.finalproject.R;
 import com.example.finalproject.models.Reservation;
 import com.example.finalproject.network.ReservationApiService;
 import com.example.finalproject.network.RetrofitInstance;
+import com.example.finalproject.ui.Activities.Pantalla_usuario_QR;
 import com.example.finalproject.utils.SessionDataManager;
 
 import java.util.List;

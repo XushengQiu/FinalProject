@@ -1,4 +1,4 @@
-package com.example.finalproject.ui;
+package com.example.finalproject.ui.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.example.finalproject.R;
 import com.example.finalproject.models.Classroom;
 import com.example.finalproject.network.ClassroomApiService;
 import com.example.finalproject.network.RetrofitInstance;
+import com.example.finalproject.ui.Pantalla_usuario_inicial;
 
 import retrofit2.Call;
 import retrofit2.Callback;

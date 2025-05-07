@@ -1,4 +1,4 @@
-package com.example.finalproject.ui;
+package com.example.finalproject.ui.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.example.finalproject.models.NewUser;
 import com.example.finalproject.models.User;
 import com.example.finalproject.network.RetrofitInstance;
 import com.example.finalproject.network.UserApiService;
+import com.example.finalproject.ui.Pantalla_usuario_inicial;
 import com.example.finalproject.utils.SessionDataManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

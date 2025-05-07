@@ -1,4 +1,4 @@
-package com.example.finalproject.ui;
+package com.example.finalproject.ui.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,6 +27,8 @@ import com.example.finalproject.models.NewReservation;
 import com.example.finalproject.models.Reservation;
 import com.example.finalproject.network.ReservationApiService;
 import com.example.finalproject.network.RetrofitInstance;
+import com.example.finalproject.ui.Pantalla_usuario_info;
+import com.example.finalproject.ui.Pantalla_usuario_inicial;
 import com.example.finalproject.utils.SessionDataManager;
 
 import java.text.ParseException;
